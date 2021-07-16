@@ -9,6 +9,7 @@ var cloudsGroup, cloudImage;
 var obstaclesGroup, obstacle1, obstacle2, obstacle3, obstacle4, obstacle5, obstacle6;
 
 var score;
+var gameOverImg,restartImg
 
 
 function preload(){
@@ -26,6 +27,9 @@ function preload(){
   obstacle5 = loadImage("obstacle5.png");
   obstacle6 = loadImage("obstacle6.png");
   
+   restartImg = loadImage("restart.png")
+  gameOverImg = loadImage("gameOver.png")
+  
 }
 
 function setup() {
@@ -40,7 +44,14 @@ function setup() {
   ground.addImage("ground",groundImage);
   ground.x = ground.width /2;
   
+    gameOver = createSprite(300,100);
+  gameOver.addImage(gameOverImg);
   
+  restart = createSprite(300,140);
+  restart.addImage(restartImg);
+  
+  gameOver.scale = 0.5;
+  restart.scale = 0.5;
   invisibleGround = createSprite(200,190,400,10);
   invisibleGround.visible = false;
   
@@ -61,6 +72,8 @@ function draw() {
   
   
   if(gameState === PLAY){
+     gameOver.visible = false
+    restart.visible = false
     //move the ground
     ground.velocityX = -4;
     //scoring
@@ -90,7 +103,8 @@ function draw() {
   }
    else if (gameState === END) {
       ground.velocityX = 0;
-     
+      gameOver.visible = true;
+    restart.visible = true;
      obstaclesGroup.setVelocityXEach(0);
      cloudsGroup.setVelocityXEach(0);
    }
